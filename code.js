@@ -13,7 +13,8 @@ const containers = [
     document.getElementById("done-container")
 ];
 
-let tasks = [];
+!localStorage.tasks ? tasks = [] : tasks = JSON.parse(localStorage.getItem("tasks"))
+render()
 
 function createTask(text) {
     return {
@@ -22,6 +23,10 @@ function createTask(text) {
         stage: 0,
         createdAt: Date.now()
     };
+}
+
+const UpdateLocalStorage = () => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
 const setContainerInvisible = (id) => {
@@ -57,6 +62,7 @@ addBtn.onclick = () => {
     tasks.push(task);
 
     input.value = "";
+    UpdateLocalStorage();
     render();
 };
 
@@ -64,6 +70,7 @@ function moveLeft(id) {
     const task = tasks.find(t => t.id === id);
     if (!task) return;
     if (task.stage > 0) task.stage--;
+    UpdateLocalStorage();
     render();
 }
 
@@ -71,11 +78,13 @@ function moveRight(id) {
     const task = tasks.find(t => t.id === id);
     if (!task) return;
     if (task.stage < 2) task.stage++;
+    UpdateLocalStorage();
     render();
 }
 
 function deleteTask(id) {
     tasks = tasks.filter(t => t.id !== id);
+    UpdateLocalStorage();
     render();
 }
 
