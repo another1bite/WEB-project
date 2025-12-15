@@ -151,6 +151,14 @@ main {
     color: #374151;
 }
 
+.task-card input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.task-done {
+    border: 2px solid lightgreen;
+}
+
 .buttons {
     display: flex;
     gap: 6px;
